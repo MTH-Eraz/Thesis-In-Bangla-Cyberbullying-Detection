@@ -255,10 +255,7 @@ Potential future improvements include:
 
 # Authors
 
-Tamjidul Hasan  
-
-Rohed Dev Ove
-Tahmim Ahmed
+Tamjidul Hasan | Rohed Dev Ove | Tahmim Ahmed
 
 Research Interests:
 

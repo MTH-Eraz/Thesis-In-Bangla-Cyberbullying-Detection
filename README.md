@@ -26,6 +26,27 @@ The final ensemble system achieves **92.20% accuracy** for Bangla cyberbullying 
 
 ---
 
+# System Architecture
+
+The overall system pipeline used in this research is illustrated below.
+
+<p align="center">
+<img src="system_architecture.png" width="900">
+</p>
+
+The architecture includes the following major components:
+
+• Dataset construction and merging  
+• Text preprocessing and feature extraction  
+• Classical machine learning models  
+• Transformer-based models (BERT and XLM-R)  
+• Ensemble learning using soft voting  
+• Performance evaluation using multiple metrics  
+
+This modular pipeline allows fair comparison between traditional NLP methods and modern transformer-based approaches.
+
+---
+
 # Problem Statement
 
 Detecting cyberbullying in Bangla social media text is challenging due to several linguistic and contextual factors:
@@ -38,13 +59,13 @@ Detecting cyberbullying in Bangla social media text is challenging due to severa
 
 Most existing cyberbullying detection systems focus on **English datasets**, while research for **Bangla cyberbullying detection remains limited**.
 
-This project aims to address this gap.
+This research aims to address this gap by developing an AI-based system capable of identifying abusive Bangla social media comments.
 
 ---
 
 # Dataset Construction
 
-A multi-stage dataset construction pipeline was used to ensure label consistency and experimental reliability.
+A structured dataset construction pipeline was used to ensure label consistency and experimental reliability.
 
 ### Dataset Pipeline
 
@@ -56,7 +77,7 @@ A multi-stage dataset construction pipeline was used to ensure label consistency
 ↓  
 Final Dataset (60,153 Samples)
 
-The final dataset contains **60,153 Bangla social media comments** labeled into cyberbullying categories.
+The final dataset contains **60,153 Bangla social media comments** annotated into cyberbullying categories.
 
 ---
 
@@ -70,13 +91,13 @@ The final dataset contains **60,153 Bangla social media comments** labeled into 
 | 3 | Troll |
 | 4 | Sexual |
 
-The dataset includes realistic Bangla social media language patterns such as slang, dialectal expressions, and code-mixed text.
+The dataset reflects realistic Bangla social media language patterns including slang expressions, dialect variations, and code-mixed Bangla-English text.
 
 ---
 
 # Data Preprocessing
 
-To prepare the dataset for machine learning and transformer models, several preprocessing steps were applied.
+Several preprocessing steps were applied before training the models:
 
 • Lowercase normalization  
 • Special character removal  
@@ -85,30 +106,30 @@ To prepare the dataset for machine learning and transformer models, several prep
 • Label encoding  
 • Dataset splitting  
 
-For transformer-based models, **minimal preprocessing** was applied to preserve contextual information.
+For transformer models, minimal preprocessing was used to preserve contextual meaning.
 
 ---
 
 # Models Used
 
-This research evaluates multiple machine learning and deep learning approaches.
+This research evaluates both classical machine learning approaches and modern transformer-based models.
 
 ---
 
 ## Classical Machine Learning
 
-Traditional NLP models were used as a baseline.
+Traditional NLP models were implemented as baseline systems.
 
 Algorithms used:
 
 • TF-IDF Feature Extraction  
-• Linear Support Vector Machine  
+• Linear Support Vector Machine (LinearSVC)  
 • Logistic Regression  
 
-A **two-stage classification pipeline** was implemented:
+A **two-stage classification architecture** was used:
 
 Stage 1 → Binary Classification (Bully vs Not Bully)  
-Stage 2 → Multi-Class Classification (Cyberbullying categories)
+Stage 2 → Multi-Class Classification (Bullying category detection)
 
 ---
 
@@ -116,11 +137,11 @@ Stage 2 → Multi-Class Classification (Cyberbullying categories)
 
 ### BERT
 
-Bidirectional Encoder Representations from Transformers (BERT) generates contextual word embeddings that capture semantic relationships within text.
+Bidirectional Encoder Representations from Transformers (BERT) captures contextual relationships between words in a sentence using bidirectional self-attention.
 
-Key advantages:
+Advantages:
 
-• Contextual word representation  
+• Context-aware embeddings  
 • Pretrained language knowledge  
 • Strong NLP performance
 
@@ -128,29 +149,32 @@ Key advantages:
 
 ### XLM-RoBERTa
 
-XLM-RoBERTa is a multilingual transformer model trained on large cross-lingual corpora.
+XLM-RoBERTa is a multilingual transformer pretrained on large-scale cross-lingual datasets.
 
 Advantages:
 
 • Multilingual contextual understanding  
-• Better performance for low-resource languages  
+• Robust performance for low-resource languages  
 • Improved minority class detection
 
 ---
 
 ## Ensemble Model
 
-To improve classification accuracy and stability, a **soft voting ensemble model** was implemented.
+To improve classification accuracy and stability, a **soft-voting ensemble model** was implemented by combining predictions from BERT and XLM-R.
 
-The ensemble combines probability outputs from BERT and XLM-R.
+The ensemble probability is calculated as:
 
+```
+P_ensemble = w1 * P_BERT + w2 * P_XLMR
+```
 
-Optimal weights:
+Optimal weights used:
 
 BERT = 0.475  
 XLM-R = 0.525  
 
-The ensemble model leverages the strengths of both transformer architectures.
+This approach leverages the strengths of both transformer models.
 
 ---
 
@@ -166,7 +190,7 @@ The ensemble model leverages the strengths of both transformer architectures.
 
 Transformer-based models significantly outperform classical machine learning approaches.
 
-The ensemble model achieves the **highest accuracy and best overall performance**.
+The ensemble model achieves the **highest performance and strongest generalization capability**.
 
 ---
 
@@ -176,13 +200,13 @@ A real-time cyberbullying detection interface was implemented using **Streamlit*
 
 ### Real-Time Workflow
 
-1. User inputs Bangla text  
+1. User inputs Bangla comment  
 2. Text is tokenized using pretrained tokenizer  
-3. BERT and XLM-R generate prediction probabilities  
-4. Ensemble model calculates final prediction  
-5. System returns the predicted category
+3. BERT and XLM-R generate probability predictions  
+4. Ensemble model combines probabilities  
+5. The final predicted category is returned
 
-This demonstrates the **practical deployment capability of the proposed system**.
+This demonstrates the **practical deployment capability** of the proposed system.
 
 ---
 
@@ -192,38 +216,40 @@ This demonstrates the **practical deployment capability of the proposed system**
 |-----------|--------|
 | Python | Programming language |
 | PyTorch | Deep learning framework |
-| HuggingFace Transformers | Transformer model implementation |
+| HuggingFace Transformers | Transformer models |
 | Scikit-learn | Classical ML models |
 | Pandas | Data processing |
 | NumPy | Numerical computation |
 | Matplotlib | Visualization |
-| Streamlit | Real-time application interface |
+| Streamlit | Real-time interface |
 
 ---
 
 # Project Structure
 
-bangla-cyberbullying-detection  
-│  
-├── dataset  
-├── models  
-├── notebooks  
-├── figures  
-├── tables  
-├── streamlit_app  
-├── training_scripts  
-└── README.md  
+```
+bangla-cyberbullying-detection
+│
+├── dataset
+├── models
+├── notebooks
+├── figures
+│   └── system_architecture.png
+├── tables
+├── streamlit_app
+└── README.md
+```
 
 ---
 
 # Future Work
 
-Future improvements for this research may include:
+Potential future improvements include:
 
 • Expanding the Bangla cyberbullying dataset  
 • Exploring advanced transformer architectures  
 • Multimodal cyberbullying detection (text + image)  
-• Integration with real social media moderation systems  
+• Integration with social media moderation systems  
 
 ---
 
